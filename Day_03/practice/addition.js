@@ -2,56 +2,60 @@
 
 //addtion function
 
-function add () {
+let list = [40, 50, 20, 72, 68, 37, 50, 110];
 
-    let values = [40, 50, 20, 72, 68, 37, 50, 110 ]
+let sum = [];
 
-    let sum = [];
+function add (numlist) {
 
-    for (let i in values) {
+    for (let i of numlist) {
 
-        sum = values[i]+sum*2;
+        sum = i + sum*2;
 
     }
-
-    console.log(sum)
 }
 
-add();
+add(list);
+
+console.log(sum);
 
 //division function
 
-function division() {
+let numbers = [40, 50, 20, 72, 68, 37, 50, 110];
 
-  let values = [40, 50, 20, 72, 68, 37, 50, 110]
+let div = [];
 
-  let div = [];
+function division(num) {
 
-    for (let i = 0; i < values.length; i++) {
+    for (let i of num) {
 
-        div = values[i] + div % 2;
+        div = i + div % 2;
     }
-
-  console.log(div);
 }
 
-division();
+division(numbers);
+
+console.log(div);
 
 
 // for of loop
 
-function pushing () {
+let values = [48, 72, 10, 100, 105];
 
-    let num = [40, 100, 1, 5, 25, 20]
+let arr = []
 
-    let sub = []
+function pushing (val) {
 
-    for (let i of num) {
+    for (let i of val) {
 
-        sub.push(num[i]*2);
+        // console.log(item[i]);
+
+        arr.push(i*2)
+
     }
 
-    console.log(sub);
 }
 
-pushing();
+pushing(values);
+
+console.log(arr);

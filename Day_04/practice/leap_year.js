@@ -1,14 +1,10 @@
-let year = 2028;
 
-if (year % 4 === 0 || year % 400 === 0) {
+let year = 1100;
 
-        console.log(`the year ${year} is a leap year`);
-
-} else if (year % 100 !== 0) {
+if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
 
         console.log(`the year ${year} is a leap year`);
 
-} else {
-
+}else {
         console.log (`the year ${year} is not a leap year`)
 }

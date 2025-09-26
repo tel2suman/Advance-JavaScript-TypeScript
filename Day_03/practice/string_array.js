@@ -4,27 +4,22 @@ let fruits = ["apple", "bannana", "orange", "mango"]
 
 function myFruits () {
 
-    for (let i in fruits) {
-
-       fruits.unshift("Guava" , "pineapple")
-    }
-
-    console.log(fruits);
+    fruits.unshift("Guava" , "pineapple")
 }
 
 myFruits();
 
+console.log(fruits);
+
+
+
+let f = ["apple", "bannana", "orange", "mango"];
 
 function myApple() {
 
-    let f = ["apple", "bannana", "orange", "mango"];
-
-    for (let i in f) {
-
-        f.shift();
-    }
-
-  console.log(f);
+    f.shift();
 }
 
 myApple();
+
+console.log(f);
