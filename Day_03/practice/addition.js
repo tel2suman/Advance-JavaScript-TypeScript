@@ -4,20 +4,22 @@
 
 let list = [40, 50, 20, 72, 68, 37, 50, 110];
 
-let sum = [];
+let addsum = 0
 
 function add (numlist) {
 
     for (let i of numlist) {
 
-        sum = i + sum*2;
+        addsum = (addsum + i / 2) ;
+
+        //sum.push(i);
 
     }
 }
 
 add(list);
 
-console.log(sum);
+console.log(addsum);
 
 //division function
 
