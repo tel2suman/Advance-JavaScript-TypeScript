@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catelog App</title>
+    <!-- favicon -->
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="./app.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="categoryList" class="nav flex-column"></ul>
+            </div>
+
+            <div class="col-md-9">
+                <h2 id="categoryHeading" class="my-4"></h2>
+                <div class="row" id="productList"></div>
+            </div>
+        </div>
+        <select id="priceSort" class="form-select w-auto" onchange="sortByPrice()">
+            <option value="">Sort by price</option>
+            <option value="asc">Price: Low → High</option>
+            <option value="desc">Price: High → Low</option>
+        </select>
+    </div>
+
+    <script>
+        async function fetchCategories() {
+                try {
+                    const response = await fetch("https://dummyjson.com/products/category-list");
+                    if (!response.ok) throw new Error("Network Error");
+
+                    const categories = await response.json();
+                    const categoryList = document.getElementById("categoryList");
+                    categoryList.innerHTML = "";
+
+                    categories.forEach(category => {
+                        const li = document.createElement("li");
+                        li.className = "nav-item";
+
+                        li.innerHTML = `
+        <a class="nav-link" href="#" data-category="${category}">
+          ${category}
+        </a>
+      `;
+
+                        categoryList.appendChild(li);
+                    });
+
+                    // Add click event to each category link
+                    categoryList.querySelectorAll("a").forEach(link => {
+                        link.addEventListener("click", (e) => {
+                            e.preventDefault();
+                            const selectedCategory = link.getAttribute("data-category");
+                            fetchProductsByCategory(selectedCategory);
+                        });
+                    });
+
+                } catch (error) {
+                    console.error("Error:", error);
+                    document.getElementById("categoryList").innerHTML =
+                        `<li class="text-danger">No Categories Found</li>`;
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", fetchCategories);
+
+    async function fetchProductsByCategory(categoryName) {
+            try {
+                const response = await fetch(`https://dummyjson.com/products/category/${categoryName}`);
+                if (!response.ok) throw new Error("Network Error");
+
+                const data = await response.json();
+                const productList = document.getElementById("productList");
+                productList.innerHTML = ""; // clear previous products
+
+                // Show category name
+                document.getElementById("categoryHeading").innerText = categoryName.toUpperCase();
+
+                data.products.forEach(product => {
+                    const div = document.createElement("div");
+                    div.className = "col-md-4 my-3";
+
+                    div.innerHTML = `
+        <div class="card shadow-sm">
+          <img src="${product.thumbnail}" class="card-img-top" alt="${product.title}">
+          <div class="card-body">
+            <h5 class="card-title">${product.title}</h5>
+            <p class="text-muted">${product.description.slice(0, 80)}...</p>
+            <h6>₹ ${product.price}</h6>
+            <a href="product_details.html?id=${product.id}" class="btn btn-primary">View Product</a>
+          </div>
+        </div>
+      `;
+
+                    productList.appendChild(div);
+                });
+
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("productList").innerHTML =
+                    `<p class="text-danger">No Products Found</p>`;
+            }
+        }
+
+            let allProducts = [];
+
+            async function fetchSearchProducts() {
+                try {
+                    const response = await fetch("https://dummyjson.com/products");
+                    if (!response.ok) throw new Error("Network Error");
+
+                    const data = await response.json();
+                    allProducts = data.products;
+
+                    renderProducts(allProducts);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", fetchSearchProducts);
+
+         function renderProducts(products) {
+                const productList = document.getElementById("productList");
+                productList.innerHTML = "";
+
+                products.forEach((product) => {
+                    const div = document.createElement("div");
+                    div.className = "col";
+
+                    div.innerHTML = `
+      <div class="card product-card shadow-lg my-4">
+        <img src="${product.images[0]}" class="img-fluid w-100" alt="">
+        <div class="card-body bg-body-secondary bg-opacity-75">
+          <div class="rating my-3">
+            <span class="text-black h4">${product.rating}</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+          </div>
+
+          <h4 class="card-title my-3">${product.title.slice(0, 18)}</h4>
+          <p class="lead fw-normal line-clamp my-3">${product.description}</p>
+
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <h4 class="card-title pricing-card-title">
+              ₹ ${Math.round(product.price * 89.87).toLocaleString("en-IN")}
+            </h4>
+            <a href="product_details.html?id=${product.id}" class="btn btn-lg btn-primary">
+              View Product
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+        productList.appendChild(div);
+        });
+    }
+
+    function sortByPrice() {
+        const sortValue = document.getElementById("priceSort").value;
+
+        let sortedProducts = [...allProducts];
+
+        if (sortValue === "asc") {
+            sortedProducts.sort((a, b) => a.price - b.price);
+        }
+        else if (sortValue === "desc") {
+            sortedProducts.sort((a, b) => b.price - a.price);
+        }
+
+        renderProducts(sortedProducts);
+    }
+
+    </script>
+
+
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- custom js -->
+    <!-- <script src="./app.js"></script> -->
+</body>
+
+</html>

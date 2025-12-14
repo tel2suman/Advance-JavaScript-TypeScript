@@ -57,11 +57,11 @@
 //   console.log (a[i]);
 // }
 
-let arr = [1, 2, 3, 4, 5, 6, 7, 8];
-let b = [];
-for (let i in a) {
-  b.push(a[i] * 2);
-}
+// let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+// let b = [];
+// for (let i in a) {
+//   b.push(a[i] * 2);
+// }
 
 // console.log(b);
 

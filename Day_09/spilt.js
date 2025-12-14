@@ -4,28 +4,32 @@ let b = str.split(' ');
 
 console.log(b);
 
- let c = str.split(" ",2)
+//  let c = str.split(" ",2)
 
- let d = str[2].split();
+// console.log(c);
 
- let s =str.split(" ")
+//  let d = str[2].split();
 
-console.log(s[1]);
+// console.log(d);
 
-let str2 = "2022-12-04"
+//  let s =str.split(" ")
 
-let e = str2.split("-")
+// console.log(s[1]);
 
-console.log(e);
+// let str2 = "2022-12-04"
 
- let str3 ="2022:22.4";
+// let e = str2.split("-")
 
- let x = str3.split(/[:.]/); //using regular expression
+// console.log(e);
 
- console.log(x);
+//  let str3 ="2022:22.4";
 
- const pattern = /hello/;
+//  let x = str3.split(/[:.]/); //using regular expression
 
- const str4 = "hello world";
+//  console.log(x);
 
- console.log(pattern.test(str4));
+//  const pattern = /hello/;
+
+//  const str4 = "hello world";
+
+//  console.log(pattern.test(str4));
