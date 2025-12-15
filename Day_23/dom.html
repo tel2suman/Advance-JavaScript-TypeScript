@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Radio Button with JS</title>
+</head>
+
+<body>
+
+    <h3>Choose Language</h3>
+
+    <label>
+        <input type="radio" onchange="showResult()" name="language" value="HTML">
+        HTML
+    </label><br>
+
+    <label>
+        <input type="radio" onchange="showResult()" name="language" value="JavaScript">
+        JavaScript
+    </label><br>
+
+    <label>
+        <input type="radio" onchange="showResult()" name="language" value="Python">
+        Python
+    </label><br><br>
+
+    <p id="output"></p>
+
+    <script>
+        function showResult() {
+            const selected = document.querySelector(
+                'input[name="language"]:checked'
+            );
+
+            if (selected) {
+                document.getElementById("output").innerText =
+                    "Here is it: " + selected.value;
+            } else {
+                document.getElementById("output").innerText =
+                    "";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lazy Loading Huge Data</title>
+    <style>
+        img {
+            display: block;
+            margin: 20px auto;
+            width: 300px;
+            height: 200px;
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lazy Loading Huge Dataset</h1>
+    <div id="image-container"></div>
+
+    <script>
+        const container = document.getElementById('image-container');
+
+
+        for (let i = 1; i <= 100; i++) {
+            const img = document.createElement('img');
+            img.classList.add('lazy');
+            img.dataset.src = 'https://picsum.photos/id/${i}/300/200';
+            img.alt = `Image ${i}`;
+            container.appendChild(img);
+        }
+
+        const lazyImages = document.querySelectorAll('.lazy');
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => observer.observe(img));
+    </script>
+</body>
+
+</html>

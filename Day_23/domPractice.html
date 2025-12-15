@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Menu Table with LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .close {
+            color: red;
+            float: right;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Menu Name</th>
+                <th>Price (₹)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="tableid">123</td>
+                <td id="tablename">White</td>
+                <td id="tableprice">456</td>
+                <td>
+                    <button onclick="viewDetails()">View</button>
+                </td>
+            </tr>
+            <tr>
+                <td id="tableid">123</td>
+                <td id="tablename">White</td>
+                <td id="tableprice">456</td>
+                <td>
+                    <button onclick="viewDetails()">View</button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Menu Details</h3>
+            <p id="detailName"></p>
+            <p id="detailPrice"></p>
+        </div>
+    </div>
+    <script>
+
+            const modal = document.getElementById("detailsModal");
+            const closeModal = document.getElementById("closeModal");
+
+        // View details  modal
+            function viewDetails(index) {
+                const tablename = document.getElementById("tablename").innerText
+                const tableprice = document.getElementById("tableprice").innerText
+                const menus = JSON.parse(localStorage.getItem("menus")) || [];
+                const menu = menus[index];
+                console.log(menu, "menu");
+                detailName.textContent = `Name: ${tablename}`;
+                detailPrice.textContent = `Price: ₹${tableprice}`;
+                modal.style.display = "block";
+            }
+
+            // Close modal
+                closeModal.onclick = () => {
+                    modal.style.display = "none";
+                };
+
+                // Close modal on outside click
+                window.onclick = (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                };
+    </script>
+</body>
+</html>
+
